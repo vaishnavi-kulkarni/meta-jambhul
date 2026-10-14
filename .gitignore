@@ -1,0 +1,18 @@
+# Yocto build output, if build directories are created inside this repo
+build/
+build-*/
+tmp/
+sstate-cache/
+downloads/
+
+# Generated image artifacts
+*.wic
+*.wic.bz2
+*.rootfs.*
+*.manifest
+*.log
+
+# Editor and OS files
+*~
+*.swp
+.DS_Store
