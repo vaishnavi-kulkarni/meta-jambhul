@@ -1,0 +1,13 @@
+[Unit]
+Description=Configure eth0 with the Jambhul static IPv4 address
+Requires=sys-subsystem-net-devices-eth0.device
+After=sys-subsystem-net-devices-eth0.device
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+ExecStart=/usr/sbin/ip link set dev eth0 up
+ExecStart=/usr/sbin/ip address replace 172.17.1.11/24 dev eth0
+
+[Install]
+WantedBy=multi-user.target
