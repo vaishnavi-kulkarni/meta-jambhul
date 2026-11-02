@@ -3,6 +3,8 @@ LICENSE = "MIT"
 
 require recipes-core/images/core-image-minimal.bb
 
+IMAGE_FEATURES += "ssh-server-openssh"
+
 IMAGE_INSTALL:append = " \
     connman \
     wpa-supplicant \
@@ -11,4 +13,5 @@ IMAGE_INSTALL:append = " \
     net-tools \
     jambhul-network \
     jambhul-device-config \
+    jambhul-ssh-access \
 "
