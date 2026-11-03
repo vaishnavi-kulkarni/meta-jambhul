@@ -1,41 +1,37 @@
-This README file contains information on the contents of the meta-jambhul layer.
+# meta-jambhul
 
-Please see the corresponding sections below for details.
+This layer contains the Jambhul distribution configuration and the
+`jambhul-image` recipe for a Raspberry Pi 5.
 
-Dependencies
-============
+## Configuration split
 
-  URI: <first dependency>
-  branch: <branch name>
+- `conf/distro/jambhul.conf` defines distribution policy such as systemd,
+  Wi-Fi support, and usrmerge. It inherits Poky's reference distro defaults
+  as a baseline, then applies Jambhul's product-wide policy; board support is
+  selected separately with `MACHINE` and the relevant BSP layer.
+- `recipes-core/images/jambhul-image.bb` defines the image's packages and
+  image features. The distro configuration sets the hostname.
+- `build-config/local.conf` is a small per-build starting configuration. It
+  selects the Raspberry Pi 5 machine and Jambhul distribution. `local.conf`
+  belongs to a build directory; use it for build-specific selections, not
+  product package lists.
 
-  URI: <second dependency>
-  branch: <branch name>
+## Build
 
-  .
-  .
-  .
+From the Yocto workspace root, initialize the build and copy the layer's
+starting configuration into the build directory:
 
-Patches
-=======
+```sh
+source sources/poky/oe-init-build-env build-rpi5
+cp ../sources/meta-jambhul/build-config/local.conf conf/local.conf
+```
 
-Please submit any patches against the meta-jambhul layer to the xxxx mailing list (xxxx@zzzz.org)
-and cc: the maintainer:
+Ensure the build's `conf/bblayers.conf` includes this layer and its
+dependencies, then build the image:
 
-Maintainer: XXX YYYYYY <xxx.yyyyyy@zzzzz.com>
+```sh
+bitbake jambhul-image
+```
 
-Table of Contents
-=================
-
-  I. Adding the meta-jambhul layer to your build
- II. Misc
-
-
-I. Adding the meta-jambhul layer to your build
-=================================================
-
-Run 'bitbake-layers add-layer meta-jambhul'
-
-II. Misc
-========
-
---- replace with specific information about the meta-jambhul layer ---
+The generated image files are placed in
+`tmp/deploy/images/raspberrypi5/` under the build directory.
